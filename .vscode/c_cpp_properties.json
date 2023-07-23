@@ -4,7 +4,8 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**",
-                "C:\\N64\\include"
+                "C:\\N64\\include",
+                "C:\\N64\\include\\GL"
             ],
             "defines": [
                 "_DEBUG",

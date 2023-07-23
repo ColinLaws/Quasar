@@ -1,3 +1,10 @@
+// #define TINYGLTF_IMPLEMENTATION
+// #define STB_IMAGE_IMPLEMENTATION
+// #define STB_IMAGE_WRITE_IMPLEMENTATION
+// #include "tiny_gltf.h"
+
+// using namespace tinygltf;
+
 #include <libdragon.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
@@ -8,24 +15,17 @@
 #include "camera.h"
 #include "cube.h"
 #include "decal.h"
-#include "sphere.h"
-#include "plane.h"
-#include "prim_test.h"
-#include "skinned.h"
 
 // Set this to 1 to enable rdpq debug output.
 // The demo will only run for a single frame and stop.
 #define DEBUG_RDP 0
 
-static uint32_t animation = 3283;
+// static uint32_t animation = 3283;
 static uint32_t texture_index = 0;
 static camera_t camera;
 static surface_t zbuffer;
 
 static GLuint textures[4];
-
-static GLenum shade_model = GL_SMOOTH;
-static bool fog_enabled = false;
 
 static const GLfloat environment_color[] = { 0.1f, 0.03f, 0.2f, 1.f };
 
@@ -73,13 +73,12 @@ void setup()
         sprites[i] = sprite_load(texture_path[i]);
     }
 
-    setup_sphere();
-    make_sphere_mesh();
-
     setup_cube();
+  
 
-    setup_plane();
-    make_plane_mesh();
+
+    // setup_plane();
+    // make_plane_mesh();
 
     float aspect_ratio = (float)display_get_width() / (float)display_get_height();
     float near_plane = 1.0f;
@@ -114,12 +113,11 @@ void setup()
 
     glGenTextures(4, textures);
 
-    #if 0
-    GLenum min_filter = GL_LINEAR_MIPMAP_LINEAR;
-    #else
     GLenum min_filter = GL_LINEAR;
-    #endif
 
+    rdpq_texparms_t texparms = {0};
+    texparms.s.repeats = REPEAT_INFINITE;
+    texparms.t.repeats = REPEAT_INFINITE;
 
     for (uint32_t i = 0; i < 4; i++)
     {
@@ -128,7 +126,7 @@ void setup()
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, min_filter);
 
-        glSpriteTextureN64(GL_TEXTURE_2D, sprites[i], &(rdpq_texparms_t){.s.repeats = REPEAT_INFINITE, .t.repeats = REPEAT_INFINITE});
+        glSpriteTextureN64(GL_TEXTURE_2D, sprites[i], &texparms);
     }
 }
 
@@ -152,13 +150,13 @@ void render()
 
     gl_context_begin();
 
-    glClearColor (0.0, 0.0, 0.0, 0.0);
-    glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClearColor(environment_color[0], environment_color[1], environment_color[2], environment_color[3]);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     glMatrixMode(GL_MODELVIEW);
     camera_transform(&camera);
 
-    
+    glPushMatrix();
     glBegin(GL_POLYGON);
       glColor3f (1.0, 0.0, 0.0);
       glVertex3f (0.25, 0.25, 0.0);
@@ -173,37 +171,19 @@ void render()
       glVertex3f (0.25, 0.75, 0.0);
     
     glEnd();
+    glPopMatrix();
 
-    // glClearColor(environment_color[0], environment_color[1], environment_color[2], environment_color[3]);
-    // glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    // glMatrixMode(GL_MODELVIEW);
-    // camera_transform(&camera);
-
-    // float rotation = animation * 0.5f;
-
-    // set_light_positions(rotation);
+    set_light_positions(0.5f);
 
     // // Set some global render modes that we want to apply to all models
-    // glEnable(GL_LIGHTING);
-    // glEnable(GL_NORMALIZE);
-    // glEnable(GL_DEPTH_TEST);
-    // glEnable(GL_CULL_FACE);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_NORMALIZE);
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
 
-    // glEnable(GL_TEXTURE_2D);
-    // glBindTexture(GL_TEXTURE_2D, textures[texture_index]);
-    
-    // render_plane();
-    // render_decal();
-    // render_cube();
-    // render_skinned(&camera, animation);
-
-    // glBindTexture(GL_TEXTURE_2D, textures[(texture_index + 1)%4]);
-    // render_sphere(rotation);
-
-    // glDisable(GL_TEXTURE_2D);
-    // glDisable(GL_LIGHTING);
-    // render_primitives(rotation);
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, textures[texture_index]);
+    render_cube();
 
     gl_context_end();
     glFlush();
@@ -211,7 +191,7 @@ void render()
     rdpq_detach_show();
 }
 
-int main()
+int main(void)
 {
 	// debug_init_isviewer();
 	// debug_init_usblog();
@@ -238,61 +218,61 @@ int main()
     {
         controller_scan();
         struct controller_data pressed = get_keys_pressed();
-        struct controller_data down = get_keys_down();
+        // struct controller_data down = get_keys_down();
 
-        if (pressed.c[0].A) {
-            animation++;
-        }
+        // if (pressed.c[0].A) {
+        //     animation++;
+        // }
 
-        if (pressed.c[0].B) {
-            animation--;
-        }
+        // if (pressed.c[0].B) {
+        //     animation--;
+        // }
 
-        if (down.c[0].start) {
-            debugf("%ld\n", animation);
-        }
+        // if (down.c[0].start) {
+        //     debugf("%ld\n", animation);
+        // }
 
-        if (down.c[0].R) {
-            shade_model = shade_model == GL_SMOOTH ? GL_FLAT : GL_SMOOTH;
-            glShadeModel(shade_model);
-        }
+        // if (down.c[0].R) {
+        //     shade_model = shade_model == GL_SMOOTH ? GL_FLAT : GL_SMOOTH;
+        //     glShadeModel(shade_model);
+        // }
 
-        if (down.c[0].L) {
-            fog_enabled = !fog_enabled;
-            if (fog_enabled) {
-                glEnable(GL_FOG);
-            } else {
-                glDisable(GL_FOG);
-            }
-        }
+        // if (down.c[0].L) {
+        //     fog_enabled = !fog_enabled;
+        //     if (fog_enabled) {
+        //         glEnable(GL_FOG);
+        //     } else {
+        //         glDisable(GL_FOG);
+        //     }
+        // }
 
-        if (down.c[0].C_up) {
-            if (sphere_rings < SPHERE_MAX_RINGS) {
-                sphere_rings++;
-            }
+        // if (down.c[0].C_up) {
+        //     if (sphere_rings < SPHERE_MAX_RINGS) {
+        //         sphere_rings++;
+        //     }
 
-            if (sphere_segments < SPHERE_MAX_SEGMENTS) {
-                sphere_segments++;
-            }
+        //     if (sphere_segments < SPHERE_MAX_SEGMENTS) {
+        //         sphere_segments++;
+        //     }
 
-            make_sphere_mesh();
-        }
+        //     make_sphere_mesh();
+        // }
 
-        if (down.c[0].C_down) {
-            if (sphere_rings > SPHERE_MIN_RINGS) {
-                sphere_rings--;
-            }
+        // if (down.c[0].C_down) {
+        //     if (sphere_rings > SPHERE_MIN_RINGS) {
+        //         sphere_rings--;
+        //     }
 
-            if (sphere_segments > SPHERE_MIN_SEGMENTS) {
-                sphere_segments--;
-            }
+        //     if (sphere_segments > SPHERE_MIN_SEGMENTS) {
+        //         sphere_segments--;
+        //     }
             
-            make_sphere_mesh();
-        }
+        //     make_sphere_mesh();
+        // }
 
-        if (down.c[0].C_right) {
-            texture_index = (texture_index + 1) % 4;
-        }
+        // if (down.c[0].C_right) {
+        //     texture_index = (texture_index + 1) % 4;
+        // }
 
         float y = pressed.c[0].y / 128.f;
         float x = pressed.c[0].x / 128.f;
