@@ -1,27 +1,20 @@
-// #define TINYGLTF_IMPLEMENTATION
-// #define STB_IMAGE_IMPLEMENTATION
-// #define STB_IMAGE_WRITE_IMPLEMENTATION
-// #include "tiny_gltf.h"
-
-// using namespace tinygltf;
-
 #include <libdragon.h>
+#include <dragonfs.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GL/gl_integration.h>
 #include <malloc.h>
 #include <math.h>
-
+#include <malloc.h>
 #include "camera.h"
-#include "cube.h"
 #include "decal.h"
+#include "model64.h"
 
 // Set this to 1 to enable rdpq debug output.
 // The demo will only run for a single frame and stop.
 #define DEBUG_RDP 0
 
 // static uint32_t animation = 3283;
-static uint32_t texture_index = 0;
 static camera_t camera;
 static surface_t zbuffer;
 
@@ -59,10 +52,14 @@ static const char *texture_path[4] = {
 };
 
 static sprite_t *sprites[4];
-
+static rdpq_font_t *fnt1;
+static model64_t *model;
 
 void setup()
 {
+    fnt1 = rdpq_font_load("rom:/Pacifico.font64");
+    model = model64_load("rom:/vega.model64");
+
     camera.distance = -10.0f;
     camera.rotation = 0.0f;
 
@@ -72,13 +69,6 @@ void setup()
     {
         sprites[i] = sprite_load(texture_path[i]);
     }
-
-    setup_cube();
-  
-
-
-    // setup_plane();
-    // make_plane_mesh();
 
     float aspect_ratio = (float)display_get_width() / (float)display_get_height();
     float near_plane = 1.0f;
@@ -156,49 +146,52 @@ void render()
     glMatrixMode(GL_MODELVIEW);
     camera_transform(&camera);
 
-    glPushMatrix();
-    glBegin(GL_POLYGON);
-      glColor3f (1.0, 0.0, 0.0);
-      glVertex3f (0.25, 0.25, 0.0);
-
-      glColor3f (0.0, 1.0, 0.0);
-      glVertex3f (0.75, 0.25, 0.0);
-
-      glColor3f (0.0, 0.0, 1.0);
-      glVertex3f (0.75, 0.75, 0.0);
-
-      glColor3f (1.0, 1.0, 1.0);
-      glVertex3f (0.25, 0.75, 0.0);
-    
-    glEnd();
-    glPopMatrix();
-
-    set_light_positions(0.5f);
-
-    // // Set some global render modes that we want to apply to all models
+    // Set some global render modes that we want to apply to all models
     glEnable(GL_LIGHTING);
     glEnable(GL_NORMALIZE);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
 
-    glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, textures[texture_index]);
-    render_cube();
+    set_light_positions(0.5f);
+
+
+    glColor4f(1, 1, 1, 0.196);
+    // glEnable(GL_BLEND);
+    // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    // mesh_t *mesh = model64_get_mesh(model, 0);
+
+    model64_draw_mesh(model64_get_mesh(model, 0));
+    model64_draw_mesh(model64_get_mesh(model, 1));
+    
+    // model64_draw_mesh(model64_get_mesh(model, 4));
+            // glDisable(GL_BLEND);
+
+    glPushMatrix();
+
+    glTranslatef(5.5f, 0.75f, -7.0f);
+
+    model64_draw_mesh(model64_get_mesh(model, 2));
+
+    glPopMatrix();
 
     gl_context_end();
     glFlush();
+
+    rdpq_font_begin(RGBA32(0xED, 0xAE, 0x49, 0xFF));
+    rdpq_font_position(20, 50);
+    rdpq_font_print(fnt1, "Shitty Titty Jelly Belly");
+    rdpq_font_end();
 
     rdpq_detach_show();
 }
 
 int main(void)
 {
-	// debug_init_isviewer();
-	// debug_init_usblog();
-    
+	debug_init_isviewer();
+	debug_init_usblog();
     dfs_init(DFS_DEFAULT_LOCATION);
 
-    display_init(RESOLUTION_640x480, DEPTH_16_BPP, 3, GAMMA_NONE, ANTIALIAS_RESAMPLE_FETCH_ALWAYS);
+    display_init(RESOLUTION_320x240, DEPTH_16_BPP, 3, GAMMA_NONE, ANTIALIAS_RESAMPLE_FETCH_ALWAYS);
 
     rdpq_init();
     gl_init();
@@ -212,67 +205,10 @@ int main(void)
 
     controller_init();
 
-#if !DEBUG_RDP
     while (1)
-#endif
     {
         controller_scan();
         struct controller_data pressed = get_keys_pressed();
-        // struct controller_data down = get_keys_down();
-
-        // if (pressed.c[0].A) {
-        //     animation++;
-        // }
-
-        // if (pressed.c[0].B) {
-        //     animation--;
-        // }
-
-        // if (down.c[0].start) {
-        //     debugf("%ld\n", animation);
-        // }
-
-        // if (down.c[0].R) {
-        //     shade_model = shade_model == GL_SMOOTH ? GL_FLAT : GL_SMOOTH;
-        //     glShadeModel(shade_model);
-        // }
-
-        // if (down.c[0].L) {
-        //     fog_enabled = !fog_enabled;
-        //     if (fog_enabled) {
-        //         glEnable(GL_FOG);
-        //     } else {
-        //         glDisable(GL_FOG);
-        //     }
-        // }
-
-        // if (down.c[0].C_up) {
-        //     if (sphere_rings < SPHERE_MAX_RINGS) {
-        //         sphere_rings++;
-        //     }
-
-        //     if (sphere_segments < SPHERE_MAX_SEGMENTS) {
-        //         sphere_segments++;
-        //     }
-
-        //     make_sphere_mesh();
-        // }
-
-        // if (down.c[0].C_down) {
-        //     if (sphere_rings > SPHERE_MIN_RINGS) {
-        //         sphere_rings--;
-        //     }
-
-        //     if (sphere_segments > SPHERE_MIN_SEGMENTS) {
-        //         sphere_segments--;
-        //     }
-            
-        //     make_sphere_mesh();
-        // }
-
-        // if (down.c[0].C_right) {
-        //     texture_index = (texture_index + 1) % 4;
-        // }
 
         float y = pressed.c[0].y / 128.f;
         float x = pressed.c[0].x / 128.f;
@@ -284,8 +220,7 @@ int main(void)
         }
 
         render();
-        if (DEBUG_RDP)
-            rspq_wait();
-    }
 
+        //rspq_wait();
+    }
 }

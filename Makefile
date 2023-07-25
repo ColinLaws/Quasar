@@ -6,10 +6,16 @@ N64_CXXFLAGS += -std=c++14
 src = main.cpp
 
 assets_png = $(wildcard assets/*.png)
+assets_glb = $(wildcard assets/*.glb)
+assets_ttf = $(wildcard assets/*.ttf)
 
-assets_conv = $(addprefix filesystem/,$(notdir $(assets_png:%.png=%.sprite)))
+assets_conv = $(addprefix filesystem/,$(notdir $(assets_png:%.png=%.sprite))) \
+			  $(addprefix filesystem/,$(notdir $(assets_glb:%.glb=%.model64))) \
+			  $(addprefix filesystem/,$(notdir $(assets_ttf:%.ttf=%.font64)))
 
 MKSPRITE_FLAGS ?=
+MKFONT_FLAGS ?=
+MKMODEL_FLAGS ?=
 
 all: Quasar64.z64
 
@@ -19,6 +25,18 @@ filesystem/%.sprite: assets/%.png
 	@mkdir -p $(dir $@)
 	@echo "    [SPRITE] $@"
 	@$(N64_MKSPRITE) -f RGBA16 --compress -o "$(dir $@)" "$<"
+
+filesystem/%.model64: assets/%.glb
+	@mkdir -p $(dir $@)
+	@echo "    [COPY] $@"
+	@$(N64_MKMODEL) $(MKMODEL_FLAGS) -o "$(dir $@)" "$<"
+
+filesystem/%.font64: assets/%.ttf
+	@mkdir -p $(dir $@)
+	@echo "    [FONT] $@"
+	@$(N64_MKFONT) $(MKFONT_FLAGS) --compress -o "$(dir $@)" "$<"
+
+filesystem/Pacifico.font64: MKFONT_FLAGS+=--size 18
 
 $(BUILD_DIR)/Quasar64.dfs: $(assets_conv)
 $(BUILD_DIR)/Quasar64.elf: $(src:%.cpp=$(BUILD_DIR)/%.o)

@@ -4,8 +4,8 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**",
-                "C:\\N64\\include",
-                "C:\\N64\\include\\GL"
+                "C:\\N64\\libdragon-unstable\\include",
+                "C:\\N64\\libdragon-unstable\\include\\GL"
             ],
             "defines": [
                 "_DEBUG",
