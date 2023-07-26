@@ -1,3 +1,4 @@
+#include "libdragon.h"
 
 class GameObject {
     
@@ -11,8 +12,9 @@ public:
     void Update();
     void Render();
 
+public:
+    int64_t id = 0;
+
 private:
     bool enabled = false;
-    
-
 };

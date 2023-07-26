@@ -3,7 +3,7 @@ include $(N64_INST)/include/n64.mk
 
 N64_CXXFLAGS += -std=c++14
 
-src = main.cpp
+src = main.cpp GameObject.o
 
 assets_png = $(wildcard assets/*.png)
 assets_glb = $(wildcard assets/*.glb)
@@ -19,7 +19,10 @@ MKMODEL_FLAGS ?=
 
 all: Quasar64.z64
 
-OBJS = $(BUILD_DIR)/main.o
+OBJS = $(BUILD_DIR)/main.o $(BUILD_DIR)/GameObject.o
+
+%.o: %.cpp
+	$(CXX) -c $(CXXFLAGS) $< -o $@
 
 filesystem/%.sprite: assets/%.png
 	@mkdir -p $(dir $@)

@@ -4,24 +4,10 @@
         {
             "label": "build",
             "type": "shell",
-            "command": "./splash.sh && make clean && make",
+            "command": "./splash.sh && make clean && make && UNFLoader -r Quasar64.z64",
             "dependsOn": ["clean"],
             "group": {
                     "kind": "build",
-                    "isDefault": true
-            },
-            "presentation": {
-                "reveal": "always",
-                "panel": "new"
-            }
-        },
-        {
-            "label": "run",
-            "type": "shell",
-            "command": "UNFLoader -r Quasar64.z64",
-            "dependsOn": ["build"],
-            "group": {
-                    "kind": "test",
                     "isDefault": true
             },
             "presentation": {
