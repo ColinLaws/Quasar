@@ -3,7 +3,7 @@ include $(N64_INST)/include/n64.mk
 
 N64_CXXFLAGS += -std=c++14
 
-src = main.cpp GameObject.o
+src = Core/GameObject.cpp main.cpp 
 
 assets_png = $(wildcard assets/*.png)
 assets_glb = $(wildcard assets/*.glb)
@@ -17,12 +17,15 @@ MKSPRITE_FLAGS ?=
 MKFONT_FLAGS ?=
 MKMODEL_FLAGS ?=
 
-all: Quasar64.z64
+TITLE = Quasar64
 
-OBJS = $(BUILD_DIR)/main.o $(BUILD_DIR)/GameObject.o
+TARGET = $(TITLE).z64
 
-%.o: %.cpp
-	$(CXX) -c $(CXXFLAGS) $< -o $@
+N64_ROM_TITLE = "Quasar 64"
+
+all: $(TARGET)
+
+OBJS = $(BUILD_DIR)/main.o $(BUILD_DIR)/Core/GameObject.o
 
 filesystem/%.sprite: assets/%.png
 	@mkdir -p $(dir $@)
@@ -41,17 +44,14 @@ filesystem/%.font64: assets/%.ttf
 
 filesystem/Pacifico.font64: MKFONT_FLAGS+=--size 18
 
-$(BUILD_DIR)/Quasar64.dfs: $(assets_conv)
-$(BUILD_DIR)/Quasar64.elf: $(src:%.cpp=$(BUILD_DIR)/%.o)
+$(BUILD_DIR)/$(TITLE).dfs: $(assets_conv)
+$(BUILD_DIR)/$(TITLE).elf: $(src:%.cpp=$(BUILD_DIR)/%.o)
 
-
-$(BUILD_DIR)/main.elf: $(OBJS)
-
-Quasar64.z64: N64_ROM_TITLE="Quasar64"
-Quasar64.z64: $(BUILD_DIR)/Quasar64.dfs
+$(TITLE).z64: N64_ROM_TITLE="$(TITLE)"
+$(TITLE).z64: $(BUILD_DIR)/$(TITLE).dfs
 
 clean:
-	rm -rf $(BUILD_DIR) filesystem/ Quasar64.z64
+	rm -rf $(BUILD_DIR)/*.o $(BUILD_DIR)/*.elf filesystem/ $(TITLE).z64
 
 -include $(wildcard $(BUILD_DIR)/*.d)
 

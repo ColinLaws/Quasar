@@ -24,7 +24,7 @@ static surface_t zbuffer;
 static const GLfloat environment_color[] = { 0.1f, 0.03f, 0.2f, 1.f };
 
 static const GLfloat light_pos[8][4] = {
-    { 1, 3, 0, 0 },
+    { 1, 1, 0, 0 },
     { -1, 0, 0, 0 },
     { 0, 0, 1, 0 },
     { 0, 0, -1, 0 },
@@ -57,13 +57,20 @@ static rdpq_font_t *fnt1;
 static model64_t *model;
 static GameObject *gameObject;
 
+GLfloat objectX = 0.0f;
+
 void setup()
 {
     fnt1 = rdpq_font_load("rom:/Pacifico.font64");
-    model = model64_load("rom:/n64-logo.model64");
+    model = model64_load("rom:/fractal-pyramid.model64");
 
-    camera.distance = -10.0f;
-    camera.rotation = 0.0f;
+    camera.position[CAMERA_AXIS_X] = 0;
+    camera.position[CAMERA_AXIS_Y] = 0;
+    camera.position[CAMERA_AXIS_Z] = 0;
+
+    camera.rotation[CAMERA_AXIS_X] = 0;
+    camera.rotation[CAMERA_AXIS_Y] = 0;
+    camera.rotation[CAMERA_AXIS_Z] = 0;
 
     zbuffer = surface_alloc(FMT_RGBA16, display_get_width(), display_get_height());
 
@@ -73,7 +80,7 @@ void setup()
     }
 
     float aspect_ratio = (float)display_get_width() / (float)display_get_height();
-    float near_plane = 1.0f;
+    float near_plane = 0.125f;
     float far_plane = 50.0f;
 
     glMatrixMode(GL_PROJECTION);
@@ -88,11 +95,13 @@ void setup()
 
     float light_radius = 5.0f;
 
-
-    glEnable(GL_LIGHT0);
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse[0]);
-    glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 2.0f/light_radius);
-    glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 1.0f/(light_radius*light_radius));
+    for (int i = 0; i < 7; i++)
+    {
+        glEnable(GL_LIGHT0 + i);
+        glLightfv(GL_LIGHT0 + i, GL_DIFFUSE, light_diffuse[i]);
+        glLightf(GL_LIGHT0 + i, GL_LINEAR_ATTENUATION, 2.0f/light_radius);
+        glLightf(GL_LIGHT0 + i, GL_QUADRATIC_ATTENUATION, 1.0f/(light_radius*light_radius));
+    }
 
     GLfloat mat_diffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
     glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, mat_diffuse);
@@ -126,7 +135,10 @@ void set_light_positions(float rotation)
     glRotatef(rotation*5.43f, 1, 0, 1);
 
 
-    glLightfv(GL_LIGHT0, GL_POSITION, light_pos[0]);
+    for (int i = 0; i < 7; i++)
+    {
+        glLightfv(GL_LIGHT0 + i, GL_POSITION, light_pos[i]);
+    }
     
     glPopMatrix();
 }
@@ -155,19 +167,23 @@ void render()
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    // mesh_t *mesh = model64_get_mesh(model, 0);
+    
+    glPushMatrix();
+
+    glTranslatef(-0.5f, -0.5f, 0.0f);
 
     model64_draw(model);
-    
-    // model64_draw_mesh(model64_get_mesh(model, 4));
-    // glDisable(GL_BLEND);
+
+    glPopMatrix();
+
+    glDisable(GL_BLEND);
 
     gl_context_end();
     glFlush();
 
     // rdpq_font_begin(RGBA32(0xED, 0xAE, 0x49, 0xFF));
     // rdpq_font_position(20, 50);
-    // rdpq_font_print(fnt1, "Shitty Titty Jelly Belly");
+    // rdpq_font_print(fnt1, "");
     // rdpq_font_end();
 
     rdpq_detach_show();
@@ -179,7 +195,7 @@ int main(void)
 	debug_init_usblog();
     dfs_init(DFS_DEFAULT_LOCATION);
 
-    display_init(RESOLUTION_320x240, DEPTH_16_BPP, 3, GAMMA_NONE, ANTIALIAS_RESAMPLE_FETCH_ALWAYS);
+    display_init(RESOLUTION_640x480, DEPTH_16_BPP, 3, GAMMA_NONE, ANTIALIAS_RESAMPLE_FETCH_ALWAYS);
 
     rdpq_init();
     gl_init();
@@ -188,7 +204,7 @@ int main(void)
     
     if (gameObject->id == 2) 
     {
-        gl_close();
+        glEnd();
     }
 
 #if DEBUG_RDP
@@ -204,14 +220,30 @@ int main(void)
     {
         controller_scan();
         struct controller_data pressed = get_keys_pressed();
+        struct controller_data down = get_keys_down();
 
         float y = pressed.c[0].y / 128.f;
         float x = pressed.c[0].x / 128.f;
-        float mag = x*x + y*y;
+        
+        // Squares of each component of a vector added together = its magnitude.
+        float mag = (x*x) + (y*y);
 
-        if (fabsf(mag) > 0.01f) {
-            camera.distance += y * 0.2f;
-            camera.rotation = camera.rotation - x * 1.2f;
+        // Since I'm such a nice guy, I'll let the player set this in the menu. You're welcome, I love you.
+        float deadZone = 0.01f;
+
+        float sensitivity = 3.5f;
+
+        // If the magnitude of our stick exceeds the dead zone.
+        if (fabsf(mag) > deadZone) {
+            camera.rotation[CAMERA_AXIS_X] += -y * sensitivity;
+            camera.rotation[CAMERA_AXIS_Y] = camera.rotation[CAMERA_AXIS_Y] - (-x * sensitivity);
+        }
+
+        if (down.c->C_up && !down.c->C_down) {
+            camera.position[CAMERA_AXIS_Z] += 0.25f;
+        }
+        else if (!down.c->C_up && down.c->C_down) {
+            camera.position[CAMERA_AXIS_Z] -= 0.25f;
         }
 
         render();

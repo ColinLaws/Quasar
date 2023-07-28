@@ -1,31 +1,26 @@
 #include "libdragon.h"
+#include "GameObject.hpp"
 
-class GameObject {
-    int64_t id = 0;
-    bool enabled = false;
-
-    GameObject() {
-        id = 1;
-    }
-
+GameObject::GameObject() {
+    id = 1;
+}
     
-    void SetEnabled(bool state) 
-    {
-        enabled = state;
-    }
+void GameObject::SetEnabled(bool state) 
+{
+    enabled = state;
+}
 
-    void Start()
-    {
+void GameObject::Start()
+{
 
-    }
+}
 
-    void Update()
-    {
+void GameObject::Update()
+{
 
-    }
-    
-    void Render()
-    {
+}
 
-    }
-};
+void GameObject::Render()
+{
+
+}
