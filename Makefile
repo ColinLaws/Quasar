@@ -3,7 +3,7 @@ include $(N64_INST)/include/n64.mk
 
 N64_CXXFLAGS += -std=c++14
 
-src = Core/GameObject.cpp main.cpp 
+src = Core/Entity.cpp main.cpp 
 
 assets_png = $(wildcard assets/*.png)
 assets_glb = $(wildcard assets/*.glb)
@@ -25,7 +25,7 @@ N64_ROM_TITLE = "Quasar 64"
 
 all: $(TARGET)
 
-OBJS = $(BUILD_DIR)/main.o $(BUILD_DIR)/Core/GameObject.o
+OBJS = $(BUILD_DIR)/main.o $(BUILD_DIR)/Core/Entity.o
 
 filesystem/%.sprite: assets/%.png
 	@mkdir -p $(dir $@)

@@ -1,3 +1,6 @@
+extern "C" {
+#include "decal.h"
+#include "model64.h"
 #include <libdragon.h>
 #include <dragonfs.h>
 #include <GL/gl.h>
@@ -6,17 +9,21 @@
 #include <malloc.h>
 #include <math.h>
 #include <malloc.h>
-#include "camera.h"
-#include "decal.h"
-#include "model64.h"
-#include "Core/GameObject.hpp"
+}
+
+
+
+#include "Core/Camera.hpp"
+#include "Core/Entity.hpp"
+
+using Quasar::Core::Entity;
 
 // Set this to 1 to enable rdpq debug output.
 // The demo will only run for a single frame and stop.
 #define DEBUG_RDP 0
 
 // static uint32_t animation = 3283;
-static camera_t camera;
+
 static surface_t zbuffer;
 
 //static GLuint textures[4];
@@ -55,7 +62,9 @@ static const char *texture_path[4] = {
 static sprite_t *sprites[4];
 static rdpq_font_t *fnt1;
 static model64_t *model;
-static GameObject *gameObject;
+
+// static Entity *Entity;
+// static Camera *camera;
 
 GLfloat objectX = 0.0f;
 
@@ -64,13 +73,13 @@ void setup()
     fnt1 = rdpq_font_load("rom:/Pacifico.font64");
     model = model64_load("rom:/fractal-pyramid.model64");
 
-    camera.position[CAMERA_AXIS_X] = 0;
-    camera.position[CAMERA_AXIS_Y] = 0;
-    camera.position[CAMERA_AXIS_Z] = 0;
+    // camera->transform->position[0] = 0;
+    // camera->transform->position[1] = 0;
+    // camera->transform->position[2] = 0;
 
-    camera.rotation[CAMERA_AXIS_X] = 0;
-    camera.rotation[CAMERA_AXIS_Y] = 0;
-    camera.rotation[CAMERA_AXIS_Z] = 0;
+    // camera->transform->rotation[0] = 0;
+    // camera->transform->rotation[1] = 0;
+    // camera->transform->rotation[2] = 0;
 
     zbuffer = surface_alloc(FMT_RGBA16, display_get_width(), display_get_height());
 
@@ -155,7 +164,7 @@ void render()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     glMatrixMode(GL_MODELVIEW);
-    camera_transform(&camera);
+    // camera->transform(&camera);
 
     // Set some global render modes that we want to apply to all models
     glEnable(GL_LIGHTING);
@@ -199,13 +208,13 @@ int main(void)
 
     rdpq_init();
     gl_init();
-
-    gameObject = new GameObject();
     
-    if (gameObject->id == 2) 
-    {
-        glEnd();
-    }
+    // Entity = new Entity();
+    
+    // if (Entity->id == 2) 
+    // {
+    //     glEnd();
+    // }
 
 #if DEBUG_RDP
     rdpq_debug_start();
@@ -220,7 +229,7 @@ int main(void)
     {
         controller_scan();
         struct controller_data pressed = get_keys_pressed();
-        struct controller_data down = get_keys_down();
+        struct controller_data held = get_keys_held();
 
         float y = pressed.c[0].y / 128.f;
         float x = pressed.c[0].x / 128.f;
@@ -233,18 +242,18 @@ int main(void)
 
         float sensitivity = 3.5f;
 
-        // If the magnitude of our stick exceeds the dead zone.
-        if (fabsf(mag) > deadZone) {
-            camera.rotation[CAMERA_AXIS_X] += -y * sensitivity;
-            camera.rotation[CAMERA_AXIS_Y] = camera.rotation[CAMERA_AXIS_Y] - (-x * sensitivity);
-        }
+        // // If the magnitude of our stick exceeds the dead zone.
+        // if (fabsf(mag) > deadZone) {
+        //     camera.rotation[CAMERA_AXIS_X] += -y * sensitivity;
+        //     camera.rotation[CAMERA_AXIS_Y] = camera.rotation[CAMERA_AXIS_Y] - (-x * sensitivity);
+        // }
 
-        if (down.c->C_up && !down.c->C_down) {
-            camera.position[CAMERA_AXIS_Z] += 0.25f;
-        }
-        else if (!down.c->C_up && down.c->C_down) {
-            camera.position[CAMERA_AXIS_Z] -= 0.25f;
-        }
+        // if (held.c->C_up && !held.c->C_down) {
+        //     camera.position[CAMERA_AXIS_Z] -= 0.25f;
+        // }
+        // else if (!held.c->C_up && held.c->C_down) {
+        //     camera.position[CAMERA_AXIS_Z] += 0.25f;
+        // }
 
         render();
 
