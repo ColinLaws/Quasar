@@ -1,6 +1,9 @@
+#pragma once
+
+#include "IComponent.hpp"
 
 namespace Quasar::Core::Components {
-    class TransformComponent
+    class TransformComponent : public IComponent
     {
         public:
             TransformComponent();

@@ -1,20 +1,13 @@
-extern "C" {
-    #include "libdragon.h"
-}
+#pragma once
 
-#include "TransformComponent.hpp"
+#include "libdragon.h"
 
 namespace Quasar::Core {
     class Entity {
         public:
-            Entity(int64_t id);
-
-            void SetEnabled(bool enabled);
+            Entity(uint16_t id);
 
         public:
-            int64_t id = 0;
-
-        private:
-            bool enabled = true;
+            uint16_t id = 0;
     };
 }

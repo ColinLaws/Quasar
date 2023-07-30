@@ -1,6 +1,4 @@
-extern "C" {
-    #include "GL/GL.h"
-}
+#include "GL/GL.h"
 
 #include "CameraComponent.hpp"
 

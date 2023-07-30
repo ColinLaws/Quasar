@@ -1,5 +1,8 @@
+#pragma once
+#include "IComponent.hpp"
+
 namespace Quasar::Core::Components {
-    class Camera
+    class Camera : public IComponent
     {
         public:
             Camera();

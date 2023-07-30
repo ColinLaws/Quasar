@@ -1,4 +1,4 @@
-extern "C" {
+
 #include "decal.h"
 #include "model64.h"
 #include <libdragon.h>
@@ -9,14 +9,7 @@ extern "C" {
 #include <malloc.h>
 #include <math.h>
 #include <malloc.h>
-}
 
-
-
-#include "Core/Camera.hpp"
-#include "Core/Entity.hpp"
-
-using Quasar::Core::Entity;
 
 // Set this to 1 to enable rdpq debug output.
 // The demo will only run for a single frame and stop.
@@ -228,19 +221,19 @@ int main(void)
     while (1)
     {
         controller_scan();
-        struct controller_data pressed = get_keys_pressed();
-        struct controller_data held = get_keys_held();
+        // struct controller_data pressed = get_keys_pressed();
+        // //struct controller_data held = get_keys_held();
 
-        float y = pressed.c[0].y / 128.f;
-        float x = pressed.c[0].x / 128.f;
+        // float y = pressed.c[0].y / 128.f;
+        // float x = pressed.c[0].x / 128.f;
         
-        // Squares of each component of a vector added together = its magnitude.
-        float mag = (x*x) + (y*y);
+        // // Squares of each component of a vector added together = its magnitude.
+        // float mag = (x*x) + (y*y);
 
-        // Since I'm such a nice guy, I'll let the player set this in the menu. You're welcome, I love you.
-        float deadZone = 0.01f;
+        // // Since I'm such a nice guy, I'll let the player set this in the menu. You're welcome, I love you.
+        // float deadZone = 0.01f;
 
-        float sensitivity = 3.5f;
+        // float sensitivity = 3.5f;
 
         // // If the magnitude of our stick exceeds the dead zone.
         // if (fabsf(mag) > deadZone) {

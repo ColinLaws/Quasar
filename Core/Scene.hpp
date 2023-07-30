@@ -1,12 +1,20 @@
-#include "Entity.hpp"
-#include "Components/TransformComponent.hpp"
+#pragma once
+
+#include "libdragon.h"
+
 #include <vector>
 #include <unordered_map>
 #include <memory>
+#include "Entity.hpp"
+#include "Components/TransformComponent.hpp"
+#include "Components/ComponentCollection.hpp"
 
 using std::unordered_map;
 using std::vector;
 using std::shared_ptr;
+using Quasar::Core::Components::ComponentCollection;
+using Quasar::Core::Components::TransformComponent;
+using Quasar::Core::Entity;
 
 namespace Quasar::Core 
 {
@@ -16,10 +24,8 @@ namespace Quasar::Core
             Scene();
 
         private:
-            vector<Quasar::Core::Entity> entities;
-            vector<std::shared_ptr<Quasar::Core::Components::TransformComponent>> transformComponents;
-
-            unordered_map<int64_t, std::shared_ptr<Quasar::Core::Components::TransformComponent>> entityIdToTransformComponentIndexMap;
+            ComponentCollection<TransformComponent> transformComponents;
+            vector<Entity> entities;
     };
 }
 
