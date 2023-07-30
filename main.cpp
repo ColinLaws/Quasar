@@ -10,17 +10,9 @@
 #include <math.h>
 #include <malloc.h>
 
-#include "Core/EntityManager.hpp"
-#include "Core/Entity.hpp"
-#include "Components/TransformComponent.hpp"
-
 // Set this to 1 to enable rdpq debug output.
 // The demo will only run for a single frame and stop.
 #define DEBUG_RDP 0
-
-using Quasar::Core::Entity;
-using Quasar::Core::EntityManager;
-using Quasar::Components::TransformComponent;
 
 static surface_t zbuffer;
 
@@ -61,7 +53,6 @@ static sprite_t *sprites[4];
 static rdpq_font_t *fnt1;
 static model64_t *model;
 
-uint16_t entityId = 0;
 // static Camera *camera;
 
 GLfloat objectX = 0.0f;
@@ -177,17 +168,6 @@ int main(void)
     rdpq_init();
     gl_init();
     
-    EntityManager* manager = new EntityManager();
-
-    entityId = manager->CreateEntity();
-
-    TransformComponent* component = new TransformComponent();
-
-    manager->AddComponent(entityId, component);
-
-
-
-
 #if DEBUG_RDP
     rdpq_debug_start();
     rdpq_debug_log(true);

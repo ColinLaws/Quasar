@@ -12,19 +12,22 @@ using Quasar::Components::ComponentCollection;
 using Quasar::Components::TransformComponent;
 using std::vector;
 
-namespace Quasar::Core
+namespace Quasar
 {
-    class EntityManager
+    namespace Core
     {
-        public: 
-            EntityManager();
-            uint16_t CreateEntity();
-            void DeleteEntity(uint16_t id);
-            void AddComponent(uint16_t entityId, IComponent* component);
+        class EntityManager
+        {
+            public: 
+                EntityManager();
+                uint16_t CreateEntity();
+                void DeleteEntity(uint16_t id);
+                void AddComponent(uint16_t entityId, IComponent* component);
 
-        private:
-            ComponentCollection<TransformComponent> transformComponents;
-            vector<Entity> entities;
-            uint16_t nextId = 0;
-    };
+            private:
+                ComponentCollection<TransformComponent> transformComponents;
+                vector<Entity> entities;
+                uint16_t nextId = 0;
+        };
+    }
 }

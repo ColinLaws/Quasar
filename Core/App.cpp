@@ -1,21 +1,27 @@
 #include "App.hpp"
 
-Quasar::Core::App::App()
+namespace Quasar
 {
-    systemsPipeline = new SystemsPipeline();
-}
+    namespace Core
+    {
+        App::App()
+        {
+            systemsPipeline = new SystemsPipeline();
+        }
 
-void Quasar::Core::App::Initialize()
-{
-    
-}
+        void App::Initialize()
+        {
+            
+        }
 
-void Quasar::Core::App::Update()
-{
+        void App::Update()
+        {
 
-}
+        }
 
-void Quasar::Core::App::Render()
-{
+        void App::Render()
+        {
 
+        }
+    }
 }
