@@ -71,14 +71,6 @@ void setup()
     fnt1 = rdpq_font_load("rom:/Pacifico.font64");
     model = model64_load("rom:/fractal-pyramid.model64");
 
-    // camera->transform->position[0] = 0;
-    // camera->transform->position[1] = 0;
-    // camera->transform->position[2] = 0;
-
-    // camera->transform->rotation[0] = 0;
-    // camera->transform->rotation[1] = 0;
-    // camera->transform->rotation[2] = 0;
-
     zbuffer = surface_alloc(FMT_RGBA16, display_get_width(), display_get_height());
 
     for (uint32_t i = 0; i < 4; i++)
@@ -110,30 +102,8 @@ void setup()
         glLightf(GL_LIGHT0 + i, GL_QUADRATIC_ATTENUATION, 1.0f/(light_radius*light_radius));
     }
 
-    GLfloat mat_diffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, mat_diffuse);
-
-    // glFogf(GL_FOG_START, 5);
-    // glFogf(GL_FOG_END, 20);
-    // glFogfv(GL_FOG_COLOR, environment_color);
-
-    // glGenTextures(4, textures);
-
-    // GLenum min_filter = GL_LINEAR;
-
-    // rdpq_texparms_t texparms = {0};
-    // texparms.s.repeats = REPEAT_INFINITE;
-    // texparms.t.repeats = REPEAT_INFINITE;
-
-    // for (uint32_t i = 0; i < 4; i++)
-    // {
-    //     glBindTexture(GL_TEXTURE_2D, textures[i]);
-
-    //     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    //     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, min_filter);
-
-    //     glSpriteTextureN64(GL_TEXTURE_2D, sprites[i], &texparms);
-    // }
+    // GLfloat mat_diffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+    // glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, mat_diffuse);
 }
 
 void set_light_positions(float rotation)
@@ -215,7 +185,7 @@ int main(void)
 
     manager->AddComponent(entityId, component);
 
-    
+
 
 
 #if DEBUG_RDP

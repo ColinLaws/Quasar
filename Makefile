@@ -10,6 +10,8 @@ src = Core/Entity.cpp \
 	  Components/TransformComponent.cpp \
 	  Components/CameraComponent.cpp \
 	  Components/ComponentCollection.hpp \
+	  Systems/System.hpp \
+	  Systems/SystemsPipeline.hpp \
 	  main.cpp 
 
 assets_png = $(wildcard assets/*.png)
