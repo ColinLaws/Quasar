@@ -6,10 +6,10 @@ namespace Quasar
 {
      namespace Systems
     {
-        class ModelRendererSystem : public System
+        class TransformSystem : public System
         {
             public:
-                ModelRendererSystem();
+                TransformSystem();
                 void Initialize(EntityManager* entityManager) override;
                 void Update(float deltaTime) override;
         };

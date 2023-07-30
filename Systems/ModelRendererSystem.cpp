@@ -2,7 +2,7 @@
 
 namespace Quasar
 {
-    namespace System
+     namespace Systems
     {
         ModelRendererSystem::ModelRendererSystem()
         {

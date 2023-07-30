@@ -4,19 +4,16 @@
 #include "../Core/EntityManager.hpp"
 
 using std::vector;
-using Quasar::System::System;
-using Quasar::Core::EntityManager;
+using Quasar::Systems::System;
 
 namespace Quasar
 {
-    namespace System
+     namespace Systems
     {
         class SystemsPipeline
         {
             public:
                 SystemsPipeline();
-                void Initialize();
-        
                 void Update(float deltaTime);
 
                 // Registration must be sequential. Once made, a system cannot be unregistered.
@@ -28,7 +25,6 @@ namespace Quasar
                 void UpdateRenderSystems(float deltaTime);
 
             private:
-                EntityManager* entityManager;
                 std::vector<System*> gameplaySystems;
                 std::vector<System*> renderSystems;
         };

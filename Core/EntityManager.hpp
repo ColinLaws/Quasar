@@ -5,11 +5,13 @@
 #include "../Components/IComponent.hpp"
 #include "../Components/ComponentCollection.hpp"
 #include "../Components/TransformComponent.hpp"
+#include "../Components/ModelComponent.hpp"
 #include <vector>
 
 using Quasar::Components::IComponent;
 using Quasar::Components::ComponentCollection;
 using Quasar::Components::TransformComponent;
+using Quasar::Components::ModelComponent;
 using std::vector;
 
 namespace Quasar
@@ -26,6 +28,7 @@ namespace Quasar
 
             private:
                 ComponentCollection<TransformComponent> transformComponents;
+                ComponentCollection<ModelComponent> modelComponents;
                 vector<Entity> entities;
                 uint16_t nextId = 0;
         };

@@ -22,7 +22,9 @@ namespace Quasar
 
         void EntityManager::DeleteEntity(uint16_t id)
         {
+            // Remove all components. It is safe to call RemoveComponent for an entity without that component.
             transformComponents.RemoveComponent(id);
+            modelComponents.RemoveComponent(id);
 
             entities.erase(remove_if(entities.begin(), entities.end(), [id](const Entity& entity) {
                 return entity.id == id;
@@ -31,11 +33,24 @@ namespace Quasar
 
         void EntityManager::AddComponent(uint16_t entityId, IComponent* component)
         {
-            TransformComponent* transformComponent = static_cast<TransformComponent*>(component);
-
-            if (transformComponent != nullptr)
+            if (component->GetType() == "TransformComponent")
             {
-                transformComponents.AddComponent(entityId, transformComponent);
+                TransformComponent* transformComponent = static_cast<TransformComponent*>(component);
+
+                if (transformComponent != nullptr)
+                {
+                    transformComponents.AddComponent(entityId, transformComponent);
+                }
+            }
+
+            if (component->GetType() == "ModelComponent")
+            {
+                ModelComponent* modelComponent = static_cast<ModelComponent*>(component);
+
+                if (modelComponent != nullptr)
+                {
+                    modelComponents.AddComponent(entityId, modelComponent);
+                }
             }
         }
     }

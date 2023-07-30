@@ -3,15 +3,18 @@ include $(N64_INST)/include/n64.mk
 
 N64_CXXFLAGS += -std=c++14
 
-src = Core/Entity.cpp \
+src = Core/App.cpp \
+	  Core/Entity.cpp \
 	  Core/EntityManager.cpp \
 	  Core/Scene.cpp \
 	  Components/IComponent.cpp \
 	  Components/TransformComponent.cpp \
+	  Components/ModelComponent.cpp \
 	  Components/CameraComponent.cpp \
-	  Components/ComponentCollection.hpp \
-	  Systems/System.hpp \
-	  Systems/SystemsPipeline.hpp \
+	  Components/ComponentCollection.cpp \
+	  Systems/SystemsPipeline.cpp \
+	  Systems/ModelRendererSystem.cpp \
+	  Systems/TransformSystem.cpp \
 	  main.cpp 
 
 assets_png = $(wildcard assets/*.png)
@@ -35,12 +38,17 @@ N64_ROM_TITLE = "Quasar 64"
 all: $(TARGET)
 
 OBJS = $(BUILD_DIR)/main.o \
+	   $(BUILD_DIR)/Core/App.o \
+	   $(BUILD_DIR)/Core/Entity.o \
        $(BUILD_DIR)/Core/EntityManager.o \
 	   $(BUILD_DIR)/Core/Scene.o \
 	   $(BUILD_DIR)/Components/IComponent.o \
+	   $(BUILD_DIR)/Components/ComponentCollection.o \
 	   $(BUILD_DIR)/Components/TransformComponent.o \
-	   $(BUILD_DIR)/Components/CameraComponent.o \
-	   $(BUILD_DIR)/Components/ComponentCollection.o
+	   $(BUILD_DIR)/Systems/ModelRendererSystem.o \
+	   $(BUILD_DIR)/Systems/SystemsPipeline.o \
+	   $(BUILD_DIR)/Systems/TransformSystem.o
+	   
 
 filesystem/%.sprite: assets/%.png
 	@mkdir -p $(dir $@)

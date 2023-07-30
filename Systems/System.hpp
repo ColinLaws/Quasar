@@ -6,12 +6,11 @@ using Quasar::Core::EntityManager;
 
 namespace Quasar
 {
-    namespace System
+     namespace Systems
     {
         class System
         {
             public:
-                System();
                 virtual void Initialize(EntityManager* entityManager) = 0;
                 virtual void Update(float deltaTime);
 

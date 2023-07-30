@@ -1,9 +1,9 @@
 #pragma once
 
 #include "libdragon.h"
-#include "../Systems/SystemsPipeline.hpp";
+#include "../Systems/SystemsPipeline.hpp"
 
-using Quasar::System::SystemsPipeline;
+using Quasar::Systems::SystemsPipeline;
 
 namespace Quasar
 {
@@ -13,9 +13,7 @@ namespace Quasar
         {
             public:
                 App();
-
                 void Update();
-                void Render();
 
             private:
                 void Initialize();
@@ -23,6 +21,7 @@ namespace Quasar
 
             private:
                 SystemsPipeline* systemsPipeline;
+                EntityManager* entityManager;
         };
     }
 }
