@@ -2,12 +2,15 @@
 
 #include <string>
 
-namespace Quasar::Components
+namespace Quasar
 {
-    class IComponent 
+    namespace Components
     {
-        public:
-            virtual ~IComponent(); 
-            virtual std::string GetType();
-    };
+        class IComponent 
+        {
+            public:
+                virtual ~IComponent(); 
+                virtual std::string GetType();
+        };
+    }
 }

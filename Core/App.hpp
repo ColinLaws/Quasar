@@ -5,21 +5,24 @@
 
 using Quasar::System::SystemsPipeline;
 
-namespace Quasar::Core
+namespace Quasar
 {
-    class App
+    namespace Core
     {
-        public:
-            App();
+        class App
+        {
+            public:
+                App();
 
-            void Update();
-            void Render();
+                void Update();
+                void Render();
 
-        private:
-            void Initialize();
-            void SetupSystemsPipeline();
+            private:
+                void Initialize();
+                void SetupSystemsPipeline();
 
-        private:
-            SystemsPipeline* systemsPipeline;
-    };
+            private:
+                SystemsPipeline* systemsPipeline;
+        };
+    }
 }

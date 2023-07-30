@@ -1,18 +1,20 @@
 #pragma once
+
+#include "model64.h"
 #include "IComponent.hpp"
 
 namespace Quasar 
 {
     namespace Components
     {
-        class Camera : public IComponent
+        class ModelComponent : public IComponent
         {
             public:
-                Camera();
+                ModelComponent(model64_t* model);
                 std::string GetType() override;
 
-            public:
-                int fov = 90;
+            private:
+                model64_t* model;
         };
     }
 }

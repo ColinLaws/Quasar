@@ -4,15 +4,19 @@
 
 using Quasar::Core::EntityManager;
 
-namespace Quasar::System
+namespace Quasar
 {
-    class System
+    namespace System
     {
-        public:
-            System(EntityManager* entityManager);
-            void Update(float deltaTime);
+        class System
+        {
+            public:
+                System();
+                virtual void Initialize(EntityManager* entityManager) = 0;
+                virtual void Update(float deltaTime);
 
-        protected:
-            EntityManager* entityManager;
-    };
+            protected:
+                EntityManager* entityManager;
+        };
+    }
 }

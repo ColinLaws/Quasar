@@ -7,27 +7,30 @@ using std::vector;
 using Quasar::System::System;
 using Quasar::Core::EntityManager;
 
-namespace Quasar::System
+namespace Quasar
 {
-    class SystemsPipeline
+    namespace System
     {
-        public:
-            SystemsPipeline();
-            void Initialize();
-      
-            void Update(float deltaTime);
+        class SystemsPipeline
+        {
+            public:
+                SystemsPipeline();
+                void Initialize();
+        
+                void Update(float deltaTime);
 
-            void RegisterGameplaySystem(System* system);
+                // Registration must be sequential. Once made, a system cannot be unregistered.
+                void RegisterGameplaySystem(System* system);
+                void RegisterRenderSystem(System* system);
 
-            void RegisterRenderSystem(System* system);
+            private:
+                void UpdateGameplaySystems(float deltaTime);
+                void UpdateRenderSystems(float deltaTime);
 
-        private:
-            void UpdateGameplaySystems(float deltaTime);
-            void UpdateRenderSystems(float deltaTime);
-
-        private:
-            EntityManager* entityManager;
-            std::vector<System*> gameplaySystems;
-            std::vector<System*> renderSystems;
-    };
+            private:
+                EntityManager* entityManager;
+                std::vector<System*> gameplaySystems;
+                std::vector<System*> renderSystems;
+        };
+    }
 }

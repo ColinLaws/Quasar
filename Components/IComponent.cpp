@@ -1,9 +1,12 @@
 #include "IComponent.hpp"
 
-namespace Quasar::Components
+namespace Quasar
 {
-    IComponent::~IComponent()
+    namespace Components
     {
+        IComponent::~IComponent()
+        {
 
+        }
     }
 }
