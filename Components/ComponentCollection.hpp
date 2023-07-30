@@ -3,7 +3,7 @@
 #include <vector>
 #include <unordered_map>
 
-namespace Quasar::Core::Components
+namespace Quasar::Components
 {
     template <typename T>
     class ComponentCollection 
@@ -14,15 +14,15 @@ namespace Quasar::Core::Components
             ComponentCollection();
             ~ComponentCollection();
 
-            const T* GetComponent(uint32_t gameObjectId) const;
-            bool HasComponent(uint32_t gameObjectId) const;
-            void AddComponent(uint32_t gameObjectId, const T& component);
-            void RemoveComponent(uint32_t gameObjectId);
+            T* GetComponent(uint16_t gameObjectId);
+            bool HasComponent(uint16_t gameObjectId);
+            void AddComponent(uint16_t gameObjectId, T component);
+            void RemoveComponent(uint16_t gameObjectId);
 
             void Clear();
 
         private:
             std::vector<T> items;
-            std::unordered_map<uint32_t, size_t> lookupTable;
+            std::unordered_map<uint16_t, size_t> lookupTable;
     };
 }

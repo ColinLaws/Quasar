@@ -1,8 +1,10 @@
 #pragma once
 
 #include "IComponent.hpp"
+#include <string>
 
-namespace Quasar::Core::Components {
+namespace Quasar::Components 
+{
     class TransformComponent : public IComponent
     {
         public:
@@ -13,6 +15,8 @@ namespace Quasar::Core::Components {
                 float rotX, float rotY, float rotZ,
                 float scaX, float scaY, float scaZ
             );
+
+            std::string GetType() override;
 
         public:
             float position[3] = {0, 0, 0};

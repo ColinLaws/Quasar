@@ -1,11 +1,11 @@
 #include "TransformComponent.hpp"
 
-Quasar::Core::Components::TransformComponent::TransformComponent()
+Quasar::Components::TransformComponent::TransformComponent()
 {
 
 }
 
-Quasar::Core::Components::TransformComponent::TransformComponent(
+Quasar::Components::TransformComponent::TransformComponent(
     float posX, float posY, float posZ,
     float rotX, float rotY, float rotZ,
     float scaX, float scaY, float scaZ
@@ -26,4 +26,9 @@ Quasar::Core::Components::TransformComponent::TransformComponent(
     scale[x] = scaX;
     scale[y] = scaY;
     scale[z] = scaZ;
+}
+
+std::string Quasar::Components::TransformComponent::GetType()
+{
+    return "TransformComponent";
 }

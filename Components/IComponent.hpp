@@ -1,9 +1,11 @@
 #pragma once
 
-namespace Quasar::Core::Components
+#include <string>
+
+namespace Quasar::Components
 {
     class IComponent 
     {
-        virtual ~IComponent();
+        virtual std::string GetType();
     };
 }

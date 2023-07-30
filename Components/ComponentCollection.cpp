@@ -1,6 +1,6 @@
 #include "ComponentCollection.hpp"
 
-namespace Quasar::Core::Components
+namespace Quasar::Components
 {
     template <typename T>
     ComponentCollection<T>::ComponentCollection() {}
@@ -9,7 +9,7 @@ namespace Quasar::Core::Components
     ComponentCollection<T>::~ComponentCollection() {}
 
     template <typename T>
-    const T *ComponentCollection<T>::GetComponent(uint32_t gameObjectId) const
+    T *ComponentCollection<T>::GetComponent(uint16_t gameObjectId)
     {
         auto it = lookupTable.find(gameObjectId);
 
@@ -22,13 +22,13 @@ namespace Quasar::Core::Components
     }
 
     template <typename T>
-    bool ComponentCollection<T>::HasComponent(uint32_t gameObjectId) const
+    bool ComponentCollection<T>::HasComponent(uint16_t gameObjectId)
     {
         return lookupTable.find(gameObjectId) != lookupTable.end();
     }
 
     template <typename T>
-    void ComponentCollection<T>::AddComponent(uint32_t gameObjectId, const T &component)
+    void ComponentCollection<T>::AddComponent(uint16_t gameObjectId, T component)
     {
         auto it = lookupTable.find(gameObjectId);
 
@@ -44,7 +44,7 @@ namespace Quasar::Core::Components
     }
 
     template <typename T>
-    void ComponentCollection<T>::RemoveComponent(uint32_t gameObjectId)
+    void ComponentCollection<T>::RemoveComponent(uint16_t gameObjectId)
     {
         auto it = lookupTable.find(gameObjectId);
 

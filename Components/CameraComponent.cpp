@@ -2,7 +2,7 @@
 
 #include "CameraComponent.hpp"
 
-Quasar::Core::Components::Camera::Camera()
+Quasar::Components::Camera::Camera()
 {
 
 }
@@ -20,7 +20,7 @@ Quasar::Core::Components::Camera::Camera()
 //     glTranslatef(-transform->position[0], -transform->position[1], -transform->position[2]);
 // }
 
-Quasar::Core::Components::Camera::~Camera()
+std::string Quasar::Components::Camera::GetType()
 {
-
+    return "CameraComponent";
 }
