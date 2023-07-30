@@ -1,4 +1,7 @@
 #include "EntityManager.hpp"
+#include <algorithm>
+
+using std::remove_if;
 
 Quasar::Core::EntityManager::EntityManager()
 {
@@ -18,14 +21,17 @@ void Quasar::Core::EntityManager::DeleteEntity(uint16_t id)
 {
     transformComponents.RemoveComponent(id);
 
-    entities.erase(std::remove_if(entities.begin(), entities.end(), [id](const Entity& entity) {
+    entities.erase(remove_if(entities.begin(), entities.end(), [id](const Entity& entity) {
         return entity.id == id;
     }), entities.end());
 }
 
-void Quasar::Core::EntityManager::AddComponent(uint16_t entityId, IComponent component)
+void Quasar::Core::EntityManager::AddComponent(uint16_t entityId, IComponent* component)
 {
-    // If component is type TransformComponent
-    transformComponents.AddComponent(entityId, component);
+    TransformComponent* transformComponent = static_cast<TransformComponent*>(component);
 
+    if (transformComponent != nullptr)
+    {
+        transformComponents.AddComponent(entityId, transformComponent);
+    }
 }

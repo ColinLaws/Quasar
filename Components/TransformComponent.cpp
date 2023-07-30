@@ -11,9 +11,9 @@ Quasar::Components::TransformComponent::TransformComponent(
     float scaX, float scaY, float scaZ
 ) 
 {
-    char x = 0x0;
-    char y = 0x1;
-    char z = 0x2;
+    int x = 0x0;
+    int y = 0x1;
+    int z = 0x2;
 
     position[x] = posX;
     position[y] = posY;

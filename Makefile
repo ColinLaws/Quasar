@@ -3,7 +3,14 @@ include $(N64_INST)/include/n64.mk
 
 N64_CXXFLAGS += -std=c++14
 
-src = Core/Entity.cpp main.cpp 
+src = Core/Entity.cpp \
+	  Core/EntityManager.cpp \
+	  Core/Scene.cpp \
+	  Components/IComponent.cpp \
+	  Components/TransformComponent.cpp \
+	  Components/CameraComponent.cpp \
+	  Components/ComponentCollection.hpp \
+	  main.cpp 
 
 assets_png = $(wildcard assets/*.png)
 assets_glb = $(wildcard assets/*.glb)
@@ -25,7 +32,13 @@ N64_ROM_TITLE = "Quasar 64"
 
 all: $(TARGET)
 
-OBJS = $(BUILD_DIR)/main.o $(BUILD_DIR)/Core/Entity.o
+OBJS = $(BUILD_DIR)/main.o \
+       $(BUILD_DIR)/Core/EntityManager.o \
+	   $(BUILD_DIR)/Core/Scene.o \
+	   $(BUILD_DIR)/Components/IComponent.o \
+	   $(BUILD_DIR)/Components/TransformComponent.o \
+	   $(BUILD_DIR)/Components/CameraComponent.o \
+	   $(BUILD_DIR)/Components/ComponentCollection.o
 
 filesystem/%.sprite: assets/%.png
 	@mkdir -p $(dir $@)

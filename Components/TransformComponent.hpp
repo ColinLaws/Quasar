@@ -3,6 +3,8 @@
 #include "IComponent.hpp"
 #include <string>
 
+using Quasar::Components::IComponent;
+
 namespace Quasar::Components 
 {
     class TransformComponent : public IComponent

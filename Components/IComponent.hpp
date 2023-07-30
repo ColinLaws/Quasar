@@ -6,6 +6,8 @@ namespace Quasar::Components
 {
     class IComponent 
     {
-        virtual std::string GetType();
+        public:
+            virtual ~IComponent(); 
+            virtual std::string GetType();
     };
 }
