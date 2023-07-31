@@ -82,7 +82,7 @@ namespace Quasar
 
             for (int i = 0; i < 7; i++)
             {
-                glLightfv(GL_LIGHT0 + i, GL_POSITION, 0);
+                //glLightfv(GL_LIGHT0 + i, GL_POSITION, 0);
             }
             
             glPopMatrix();
