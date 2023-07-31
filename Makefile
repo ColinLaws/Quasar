@@ -13,6 +13,7 @@ src = Core/App.cpp \
 	  Components/CameraComponent.cpp \
 	  Components/ComponentCollection.cpp \
 	  Systems/SystemsPipeline.cpp \
+	  Systems/System.cpp \
 	  Systems/RenderInitializationSystem.cpp \
 	  Systems/RenderUninitializationSystem.cpp \
 	  Systems/ModelRendererSystem.cpp \
@@ -53,6 +54,7 @@ OBJS = $(BUILD_DIR)/main.o \
 	   $(BUILD_DIR)/Systems/ModelRendererSystem.o \
 	   $(BUILD_DIR)/Systems/InitializationSystem.o \
 	   $(BUILD_DIR)/Systems/TransformSystem.o \
+	   $(BUILD_DIR)/Systems/System.o \
 	   $(BUILD_DIR)/Systems/SystemsPipeline.o
 
 filesystem/%.sprite: assets/%.png

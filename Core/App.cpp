@@ -39,6 +39,8 @@ namespace Quasar
 
             systemsPipeline = new SystemsPipeline();
             entityManager = new EntityManager();
+
+            this->Initialize();
         }
 
         void App::Initialize()

@@ -1,7 +1,11 @@
+#include "GL/gl.h"
+#include "libdragon.h"
 #include "EntityManager.hpp"
 #include <algorithm>
+#include <exception>
 
 using std::remove_if;
+using std::exception;
 
 namespace Quasar
 {
@@ -46,6 +50,8 @@ namespace Quasar
             if (component->GetType() == "ModelComponent")
             {
                 ModelComponent* modelComponent = static_cast<ModelComponent*>(component);
+
+                
 
                 if (modelComponent != nullptr)
                 {

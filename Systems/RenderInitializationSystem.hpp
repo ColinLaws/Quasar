@@ -14,7 +14,7 @@ namespace Quasar
                 void Update(float deltaTime) override;
 
             private:
-                static surface_t zbuffer;
+                surface_t zbuffer;
         };
     }
 }

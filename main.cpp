@@ -89,11 +89,6 @@ static App *app;
 
 //     // camera->transform(&camera);
 
-//     // Set some global render modes that we want to apply to all models
-//     glEnable(GL_LIGHTING);
-//     glEnable(GL_NORMALIZE);
-//     glEnable(GL_DEPTH_TEST);
-//     glEnable(GL_CULL_FACE);
 
 //     set_light_positions(0.0f);
 
@@ -102,11 +97,7 @@ static App *app;
     
 //     glPushMatrix();
 
-//     glTranslatef(-0.5f, -0.5f, 0.0f);
 
-
-
-//     glPopMatrix();
 
 //     glDisable(GL_BLEND);
 
@@ -124,8 +115,6 @@ static App *app;
 int main(void)
 {
     app = new App();
-
-
 
 //     setup();
 

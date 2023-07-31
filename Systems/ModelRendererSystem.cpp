@@ -17,6 +17,25 @@ namespace Quasar
 
         void ModelRendererSystem::Update(float deltaTime)
         {
+            glPushMatrix();
+            glColor4f(1.0f, 0.0f, 1.0f, 1.0f);
+            
+            glBegin(GL_TRIANGLE_STRIP);
+                glNormal3f(0, 1, 0);
+                glTexCoord2f(0, 0);
+                glVertex3f(-0.5f, 0, -0.5f);
+                glTexCoord2f(0, 1);
+                glVertex3f(-0.5f, 0, 0.5f);
+                glTexCoord2f(1, 0);
+                glVertex3f(0.5f, 0, -0.5f);
+                glTexCoord2f(1, 1);
+                glVertex3f(0.5f, 0, 0.5f);
+            glEnd();
+
+            glTranslatef(-0.5f, -0.5f, 0.0f);
+
+            glPopMatrix();
+
             for (const ModelComponent& modelComponent : entityManager->modelComponents.items)
             {
                 glColor3f(1.0f, 1.0f, 1.0f);

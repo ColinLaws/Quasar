@@ -1,6 +1,6 @@
 #include "GL/gl.h"
 #include "GL/glu.h"
-#include <GL/gl_integration.h>
+#include "GL/gl_integration.h"
 #include "RenderInitializationSystem.hpp"
 #include "../Components/ModelComponent.hpp"
 
@@ -10,11 +10,11 @@ namespace Quasar
 {
      namespace Systems
     {
-        RenderInitializationSystem::RenderInitializationSystem()
+        RenderInitializationSystem::RenderInitializationSystem() : zbuffer(surface_alloc(FMT_RGBA16, display_get_width(), display_get_height()))
         {
             static const GLfloat environment_color[] = { 0.1f, 0.03f, 0.2f, 1.f };
             GLfloat mat_diffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-            zbuffer = surface_alloc(FMT_RGBA16, display_get_width(), display_get_height());
+
             glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, mat_diffuse);
             float aspect_ratio = (float)display_get_width() / (float)display_get_height();
             float near_plane = 0.125f;
@@ -67,6 +67,25 @@ namespace Quasar
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             
             glMatrixMode(GL_MODELVIEW);
+
+            // Set some global render modes that we want to apply to all models
+            glEnable(GL_LIGHTING);
+            glEnable(GL_NORMALIZE);
+            glEnable(GL_DEPTH_TEST);
+            glEnable(GL_CULL_FACE);
+
+            float rotation = 0.0f;
+            
+            glPushMatrix();
+            glRotatef(rotation*5.43f, 1, 0, 1);
+
+
+            for (int i = 0; i < 7; i++)
+            {
+                glLightfv(GL_LIGHT0 + i, GL_POSITION, 0);
+            }
+            
+            glPopMatrix();
         }
     }
 }
