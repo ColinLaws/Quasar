@@ -25,8 +25,10 @@ namespace Quasar
 
                     void Clear();
 
-                private:
+                public:
                     std::vector<T> items;
+
+                private:
                     std::unordered_map<uint16_t, size_t> lookupTable;
             };
 
@@ -74,6 +76,16 @@ namespace Quasar
             template <typename T>
             void ComponentCollection<T>::RemoveComponent(uint16_t gameObjectId)
             {
+                // The ComponentCollection class could use some optimizations. 
+                // When a component is removed, you're swapping the last component in
+                // the list with the one you're removing and then popping the last 
+                // element, which is a common trick to keep the vector compact. 
+                // However, you are forgetting to update the lookupTable for the 
+                // swapped component. As a result, after calling RemoveComponent, 
+                // the lookupTable for the last element in items (before the pop) 
+                // will still point to its old location, which is now invalid. 
+                // This bug could lead to unexpected behavior or crashes.
+
                 auto it = lookupTable.find(gameObjectId);
 
                 if (it != lookupTable.end())

@@ -13,8 +13,11 @@ src = Core/App.cpp \
 	  Components/CameraComponent.cpp \
 	  Components/ComponentCollection.cpp \
 	  Systems/SystemsPipeline.cpp \
+	  Systems/RenderInitializationSystem.cpp \
+	  Systems/RenderUninitializationSystem.cpp \
 	  Systems/ModelRendererSystem.cpp \
 	  Systems/TransformSystem.cpp \
+	  Systems/InitializationSystem.cpp \
 	  main.cpp 
 
 assets_png = $(wildcard assets/*.png)
@@ -45,10 +48,12 @@ OBJS = $(BUILD_DIR)/main.o \
 	   $(BUILD_DIR)/Components/IComponent.o \
 	   $(BUILD_DIR)/Components/ComponentCollection.o \
 	   $(BUILD_DIR)/Components/TransformComponent.o \
+	   $(BUILD_DIR)/Systems/RenderInitializationSystem.o \
+	   $(BUILD_DIR)/Systems/RenderUninitializationSystem.o \
 	   $(BUILD_DIR)/Systems/ModelRendererSystem.o \
-	   $(BUILD_DIR)/Systems/SystemsPipeline.o \
-	   $(BUILD_DIR)/Systems/TransformSystem.o
-	   
+	   $(BUILD_DIR)/Systems/InitializationSystem.o \
+	   $(BUILD_DIR)/Systems/TransformSystem.o \
+	   $(BUILD_DIR)/Systems/SystemsPipeline.o
 
 filesystem/%.sprite: assets/%.png
 	@mkdir -p $(dir $@)

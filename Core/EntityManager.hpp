@@ -26,9 +26,11 @@ namespace Quasar
                 void DeleteEntity(uint16_t id);
                 void AddComponent(uint16_t entityId, IComponent* component);
 
-            private:
+            public:
                 ComponentCollection<TransformComponent> transformComponents;
                 ComponentCollection<ModelComponent> modelComponents;
+
+            private:
                 vector<Entity> entities;
                 uint16_t nextId = 0;
         };

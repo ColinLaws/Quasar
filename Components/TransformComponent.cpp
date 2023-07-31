@@ -6,7 +6,7 @@ namespace Quasar
     {
         TransformComponent::TransformComponent()
         {
-
+            
         }
 
         TransformComponent::TransformComponent(

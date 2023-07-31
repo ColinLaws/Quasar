@@ -13,7 +13,7 @@ namespace Quasar
                 ModelComponent(model64_t* model);
                 std::string GetType() override;
 
-            private:
+            public:
                 model64_t* model;
         };
     }

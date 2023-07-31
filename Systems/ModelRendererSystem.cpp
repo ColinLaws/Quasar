@@ -1,4 +1,5 @@
 #include "ModelRendererSystem.hpp"
+#include "GL\GL.h"
 
 namespace Quasar
 {
@@ -16,7 +17,11 @@ namespace Quasar
 
         void ModelRendererSystem::Update(float deltaTime)
         {
-            
+            for (const ModelComponent& modelComponent : entityManager->modelComponents.items)
+            {
+                glColor3f(1.0f, 1.0f, 1.0f);
+                model64_draw(modelComponent.model);
+            }
         }
     }
 }

@@ -13,6 +13,7 @@ namespace Quasar
         {
             public:
                 App();
+                ~App();
                 void Update();
 
             private:
@@ -22,6 +23,7 @@ namespace Quasar
             private:
                 SystemsPipeline* systemsPipeline;
                 EntityManager* entityManager;
+                
         };
     }
 }
