@@ -51,8 +51,6 @@ namespace Quasar
             {
                 ModelComponent* modelComponent = static_cast<ModelComponent*>(component);
 
-                
-
                 if (modelComponent != nullptr)
                 {
                     modelComponents.AddComponent(entityId, modelComponent);
