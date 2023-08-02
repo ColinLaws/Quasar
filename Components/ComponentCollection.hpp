@@ -18,10 +18,10 @@ namespace Quasar
                     ComponentCollection<T>();
                     ~ComponentCollection();
 
-                    T* GetComponent(uint16_t gameObjectId);
-                    bool HasComponent(uint16_t gameObjectId);
-                    void AddComponent(uint16_t gameObjectId, T* component);
-                    void RemoveComponent(uint16_t gameObjectId);
+                    T* GetComponent(uint16_t entityId);
+                    bool HasEntity(uint16_t entityId);
+                    void AddComponent(uint16_t entityId, T* component);
+                    void RemoveComponent(uint16_t entityId);
 
                     void Clear();
 
@@ -39,9 +39,9 @@ namespace Quasar
             ComponentCollection<T>::~ComponentCollection() {}
 
             template <typename T>
-            T* ComponentCollection<T>::GetComponent(uint16_t gameObjectId)
+            T* ComponentCollection<T>::GetComponent(uint16_t entityId)
             {
-                auto it = lookupTable.find(gameObjectId);
+                auto it = lookupTable.find(entityId);
 
                 if (it != lookupTable.end())
                 {
@@ -52,15 +52,15 @@ namespace Quasar
             }
 
             template <typename T>
-            bool ComponentCollection<T>::HasComponent(uint16_t gameObjectId)
+            bool ComponentCollection<T>::HasEntity(uint16_t entityId)
             {
-                return lookupTable.find(gameObjectId) != lookupTable.end();
+                return lookupTable.find(entityId) != lookupTable.end();
             }
 
             template <typename T>
-            void ComponentCollection<T>::AddComponent(uint16_t gameObjectId, T* component)
+            void ComponentCollection<T>::AddComponent(uint16_t entityId, T* component)
             {
-                auto it = lookupTable.find(gameObjectId);
+                auto it = lookupTable.find(entityId);
 
                 if (it != lookupTable.end())
                 {
@@ -69,12 +69,12 @@ namespace Quasar
                 else
                 {
                     items.push_back(*component);
-                    lookupTable[gameObjectId] = items.size() - 1;
+                    lookupTable[entityId] = items.size() - 1;
                 }
             }
 
             template <typename T>
-            void ComponentCollection<T>::RemoveComponent(uint16_t gameObjectId)
+            void ComponentCollection<T>::RemoveComponent(uint16_t entityId)
             {
                 // The ComponentCollection class could use some optimizations. 
                 // When a component is removed, you're swapping the last component in
@@ -86,7 +86,7 @@ namespace Quasar
                 // will still point to its old location, which is now invalid. 
                 // This bug could lead to unexpected behavior or crashes.
 
-                auto it = lookupTable.find(gameObjectId);
+                auto it = lookupTable.find(entityId);
 
                 if (it != lookupTable.end())
                 {

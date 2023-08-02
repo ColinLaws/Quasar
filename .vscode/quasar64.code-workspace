@@ -79,7 +79,8 @@
 			"xutility": "cpp",
 			"utils.h": "c",
 			"condition_variable": "cpp",
-			"shared_mutex": "cpp"
+			"shared_mutex": "cpp",
+			"typeindex": "cpp"
 		}
 	}
 }

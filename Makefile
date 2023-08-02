@@ -1,7 +1,7 @@
 BUILD_DIR=build
 include $(N64_INST)/include/n64.mk
 
-N64_CXXFLAGS += -std=c++14
+N64_CXXFLAGS += -std=c++17
 
 src = Core/App.cpp \
 	  Core/Entity.cpp \
@@ -11,7 +11,6 @@ src = Core/App.cpp \
 	  Components/TransformComponent.cpp \
 	  Components/ModelComponent.cpp \
 	  Components/CameraComponent.cpp \
-	  Components/ComponentCollection.cpp \
 	  Systems/SystemsPipeline.cpp \
 	  Systems/System.cpp \
 	  Systems/RenderInitializationSystem.cpp \
@@ -47,7 +46,6 @@ OBJS = $(BUILD_DIR)/main.o \
        $(BUILD_DIR)/Core/EntityManager.o \
 	   $(BUILD_DIR)/Core/Scene.o \
 	   $(BUILD_DIR)/Components/IComponent.o \
-	   $(BUILD_DIR)/Components/ComponentCollection.o \
 	   $(BUILD_DIR)/Components/TransformComponent.o \
 	   $(BUILD_DIR)/Systems/RenderInitializationSystem.o \
 	   $(BUILD_DIR)/Systems/RenderUninitializationSystem.o \

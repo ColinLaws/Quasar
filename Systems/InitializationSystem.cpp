@@ -1,6 +1,8 @@
 #include "InitializationSystem.hpp"
+#include "../Components/TransformComponent.hpp"
 #include "../Components/ModelComponent.hpp"
 
+using Quasar::Components::TransformComponent;
 using Quasar::Components::ModelComponent;
 
 namespace Quasar
@@ -20,7 +22,8 @@ namespace Quasar
 
             model64_t *model = model64_load("rom:/fractal-pyramid.model64");
 
-            this->entityManager->AddComponent(entityId, new ModelComponent(model));
+            this->entityManager->AddComponent<ModelComponent>(entityId, new ModelComponent(model));
+            this->entityManager->AddComponent<TransformComponent>(entityId, new TransformComponent());
         }
 
         void InitializationSystem::Update(float deltaTime)

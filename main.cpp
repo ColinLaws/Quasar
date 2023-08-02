@@ -126,8 +126,8 @@ int main(void)
 
         //controller_scan();
         // struct controller_data pressed = get_keys_pressed();
-        // //struct controller_data held = get_keys_held();
-
+        // struct controller_data held = get_keys_held();
+        // get_controllers_present();
         // float y = pressed.c[0].y / 128.f;
         // float x = pressed.c[0].x / 128.f;
         

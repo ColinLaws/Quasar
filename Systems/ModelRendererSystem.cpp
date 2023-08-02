@@ -23,10 +23,14 @@ namespace Quasar
             glRotatef(60.0f, 0.0f, 1.0f, 0.0f);
             glRotatef(60.0f, 1.0f, 0.0f, 0.0f);
             
-            for (const ModelComponent& modelComponent : entityManager->modelComponents.items)
+            auto entityIds = entityManager->GetEntities<ModelComponent, TransformComponent>();
+
+            for (uint16_t entityId : entityIds)
             {
+                ModelComponent* modelComponent = entityManager->GetComponent<ModelComponent>(entityId);
+
                 glColor4f(1.0f, 0.0f, 1.0f, 1.0f);
-                model64_draw(modelComponent.model);
+                model64_draw(modelComponent->model);
             }
 
             glPopMatrix();

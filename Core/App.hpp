@@ -18,7 +18,8 @@ namespace Quasar
 
             private:
                 void Initialize();
-                void SetupSystemsPipeline();
+                void RegisterComponents();
+                void RegisterSystems();
 
             private:
                 SystemsPipeline* systemsPipeline;

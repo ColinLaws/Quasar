@@ -45,6 +45,21 @@ namespace Quasar
 
         void App::Initialize()
         {
+            RegisterComponents();
+            RegisterSystems();
+        }
+
+        void App::RegisterComponents()
+        {
+            ComponentCollection<TransformComponent> *transformCollection = new ComponentCollection<TransformComponent>();
+            entityManager->RegisterComponentCollection<TransformComponent>(transformCollection);
+
+            ComponentCollection<ModelComponent> *modelCollection = new ComponentCollection<ModelComponent>();
+            entityManager->RegisterComponentCollection<ModelComponent>(modelCollection);
+        }
+
+        void App::RegisterSystems()
+        {
             // Gameplay Systems
             InitializationSystem* initializationSystem = new InitializationSystem();
             initializationSystem->Initialize(entityManager);
