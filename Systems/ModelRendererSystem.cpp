@@ -17,12 +17,13 @@ namespace Quasar
 
         void ModelRendererSystem::Update(float deltaTime)
         {
-            glPushMatrix();
+            
 
             auto entityIds = entityManager->GetEntities<ModelComponent, TransformComponent>();
 
             for (uint16_t entityId : entityIds)
             {
+                glPushMatrix();
                 ModelComponent* modelComponent = entityManager->GetComponent<ModelComponent>(entityId);
 
 
@@ -42,10 +43,10 @@ namespace Quasar
 
                 model64_draw(modelComponent->model);
 
-                
+                glPopMatrix();
             }
 
-            glPopMatrix();
+            
         }
     }
 }

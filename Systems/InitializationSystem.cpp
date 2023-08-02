@@ -20,17 +20,19 @@ namespace Quasar
 
             model64_t *model = model64_load("rom:/n64-logo.model64");
 
+            ModelComponent* modelComponent = new ModelComponent(model);
+
             for (int row = 0; row < 4; row++)
             {
                 for (int column = 0; column < 4; column++)
                 {
                     uint16_t entityId = this->entityManager->CreateEntity();
 
-                    this->entityManager->AddComponent<ModelComponent>(entityId, new ModelComponent(model));
+                    this->entityManager->AddComponent<ModelComponent>(entityId, modelComponent);
                     
                     this->entityManager->AddComponent<TransformComponent>(entityId, 
                         new TransformComponent(
-                            (column * 0.5f) + 1.0f, (row * 0.5f) + 0.0f, -8.0,
+                            (column * 3.0f) - 4.0f, (row * 3.0f) - 4.0f, -8.0,
                             60, 60, 0,
                             1, 1, 1
                         )
