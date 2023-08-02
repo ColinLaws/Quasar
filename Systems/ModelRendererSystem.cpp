@@ -33,7 +33,7 @@ namespace Quasar
 
                 glTranslatef(transformComponent->position[0], transformComponent->position[1], transformComponent->position[2]);
                 
-                transformComponent->rotation[0] += 5.0f;
+                transformComponent->rotation[1] += 5.0f;
 
                 glRotatef(transformComponent->rotation[0], 1.0f, 0.0f, 0.0f);
                 glRotatef(transformComponent->rotation[1], 0.0f, 1.0f, 0.0f);
