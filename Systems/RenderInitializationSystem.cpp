@@ -74,18 +74,18 @@ namespace Quasar
             glEnable(GL_DEPTH_TEST);
             glEnable(GL_CULL_FACE);
 
-            float rotation = 0.0f;
+            //float rotation = 0.0f;
             
-            glPushMatrix();
-            glRotatef(rotation*5.43f, 1, 0, 1);
+            // glPushMatrix();
+            // glRotatef(rotation*5.43f, 1, 0, 1);
 
 
-            for (int i = 0; i < 7; i++)
-            {
-                //glLightfv(GL_LIGHT0 + i, GL_POSITION, 0);
-            }
+            // for (int i = 0; i < 7; i++)
+            // {
+            //     glLightfv(GL_LIGHT0 + i, GL_POSITION, 0);
+            // }
             
-            glPopMatrix();
+            // glPopMatrix();
         }
     }
 }

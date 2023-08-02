@@ -19,18 +19,30 @@ namespace Quasar
         {
             glPushMatrix();
 
-            glTranslatef(-0.0f, -0.0f, -2.0f);
-            glRotatef(60.0f, 0.0f, 1.0f, 0.0f);
-            glRotatef(60.0f, 1.0f, 0.0f, 0.0f);
-            
             auto entityIds = entityManager->GetEntities<ModelComponent, TransformComponent>();
 
             for (uint16_t entityId : entityIds)
             {
                 ModelComponent* modelComponent = entityManager->GetComponent<ModelComponent>(entityId);
 
-                glColor4f(1.0f, 0.0f, 1.0f, 1.0f);
+
+                TransformComponent* transformComponent = entityManager->GetComponent<TransformComponent>(entityId);
+
+                
+
+                glTranslatef(transformComponent->position[0], transformComponent->position[1], transformComponent->position[2]);
+                
+                transformComponent->rotation[0] += 5.0f;
+
+                glRotatef(transformComponent->rotation[0], 1.0f, 0.0f, 0.0f);
+                glRotatef(transformComponent->rotation[1], 0.0f, 1.0f, 0.0f);
+                glRotatef(transformComponent->rotation[2], 0.0f, 0.0f, 1.0f);
+
+                glColor4f(1.0f, 0.0f, 1.0f, 0.5f);
+
                 model64_draw(modelComponent->model);
+
+                
             }
 
             glPopMatrix();

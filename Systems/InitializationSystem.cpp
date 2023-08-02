@@ -18,12 +18,25 @@ namespace Quasar
         {
             this->entityManager = entityManager;
 
-            uint16_t entityId = this->entityManager->CreateEntity();
+            model64_t *model = model64_load("rom:/n64-logo.model64");
 
-            model64_t *model = model64_load("rom:/fractal-pyramid.model64");
+            for (int row = 0; row < 4; row++)
+            {
+                for (int column = 0; column < 4; column++)
+                {
+                    uint16_t entityId = this->entityManager->CreateEntity();
 
-            this->entityManager->AddComponent<ModelComponent>(entityId, new ModelComponent(model));
-            this->entityManager->AddComponent<TransformComponent>(entityId, new TransformComponent());
+                    this->entityManager->AddComponent<ModelComponent>(entityId, new ModelComponent(model));
+                    
+                    this->entityManager->AddComponent<TransformComponent>(entityId, 
+                        new TransformComponent(
+                            (column * 0.5f) + 1.0f, (row * 0.5f) + 0.0f, -8.0,
+                            60, 60, 0,
+                            1, 1, 1
+                        )
+                    );
+                }
+            }
         }
 
         void InitializationSystem::Update(float deltaTime)

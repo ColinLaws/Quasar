@@ -21,8 +21,8 @@ namespace Quasar
     {
         App::App()
         {
-            debug_init_isviewer();
-            debug_init_usblog();
+            // debug_init_isviewer();
+            // debug_init_usblog();
             dfs_init(DFS_DEFAULT_LOCATION);
 
             display_init(RESOLUTION_640x480, DEPTH_16_BPP, 3, GAMMA_NONE, ANTIALIAS_RESAMPLE_FETCH_ALWAYS);
