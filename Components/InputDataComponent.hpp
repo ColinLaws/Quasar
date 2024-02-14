@@ -1,19 +1,18 @@
 #pragma once
-
-#include "model64.h"
 #include "IComponent.hpp"
+#include "libdragon.h"
 
 namespace Quasar 
 {
     namespace Components
     {
-        class ModelComponent : public IComponent
+        class InputDataComponent : public IComponent
         {
             public:
-                ModelComponent(model64_t* model);
+                InputDataComponent();
 
             public:
-                model64_t* model;
+                controller_data pressed;
         };
     }
 }

@@ -9,8 +9,7 @@ namespace Quasar
         class IComponent 
         {
             public:
-                virtual ~IComponent(); 
-                virtual std::string GetType();
+                virtual ~IComponent();
         };
     }
 }

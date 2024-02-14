@@ -31,10 +31,5 @@ namespace Quasar
             scale[y] = scaY;
             scale[z] = scaZ;
         }
-
-        std::string TransformComponent::GetType()
-        {
-            return "TransformComponent";
-        }
     }
 }

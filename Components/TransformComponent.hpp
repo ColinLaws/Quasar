@@ -18,8 +18,6 @@ namespace Quasar
                     float scaX, float scaY, float scaZ
                 );
 
-                std::string GetType() override;
-
             public:
                 float position[3] = {0, 0, 0};
                 float rotation[3] = {0, 0, 0};

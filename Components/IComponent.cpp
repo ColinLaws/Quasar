@@ -6,7 +6,6 @@ namespace Quasar
     {
         IComponent::~IComponent()
         {
-
         }
     }
 }

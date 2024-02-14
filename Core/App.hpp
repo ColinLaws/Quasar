@@ -11,20 +11,19 @@ namespace Quasar
     {
         class App
         {
-            public:
-                App();
-                ~App();
-                void Update();
+        public:
+            App();
+            ~App();
+            void Update();
 
-            private:
-                void Initialize();
-                void RegisterComponents();
-                void RegisterSystems();
+        private:
+            void Initialize();
+            void RegisterComponents();
+            void RegisterSystems();
 
-            private:
-                SystemsPipeline* systemsPipeline;
-                EntityManager* entityManager;
-                
+        private:
+            SystemsPipeline *systemsPipeline;
+            EntityManager *entityManager;
         };
     }
 }

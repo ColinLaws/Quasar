@@ -6,12 +6,6 @@ namespace Quasar
     {
         ModelComponent::ModelComponent(model64_t* model) : model(model)
         {
-            
-        }
-
-        std::string ModelComponent::GetType()
-        {
-            return "ModelComponent";
         }
     }
 }

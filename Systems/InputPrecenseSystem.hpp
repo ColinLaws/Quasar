@@ -6,10 +6,10 @@ namespace Quasar
 {
      namespace Systems
     {
-        class InitializationSystem : public System
+        class InputPresenceSystem : public System
         {
             public:
-                InitializationSystem();
+                InputPresenceSystem();
                 void Initialize(EntityManager* entityManager) override;
                 void Update(float deltaTime) override;
         };

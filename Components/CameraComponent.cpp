@@ -23,10 +23,5 @@ namespace Quasar
         //     // Translate to the camera position
         //     glTranslatef(-transform->position[0], -transform->position[1], -transform->position[2]);
         // }
-
-        std::string Camera::GetType()
-        {
-            return "CameraComponent";
-        }
     }
 }

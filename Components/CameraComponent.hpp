@@ -9,7 +9,6 @@ namespace Quasar
         {
             public:
                 Camera();
-                std::string GetType() override;
 
             public:
                 int fov = 90;
