@@ -1,0 +1,19 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "run64",
+            "type": "shell",
+            "command": "./src/splash.sh && make clean && make && UNFLoader -r Quasar64.z64",
+            "dependsOn": ["clean"],
+            "group": {
+                    "kind": "build",
+                    "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        }
+    ]
+}
