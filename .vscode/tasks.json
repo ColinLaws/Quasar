@@ -2,10 +2,38 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "run64",
+            "label": "clean",
             "type": "shell",
-            "command": "./src/splash.sh && make clean && make && UNFLoader -r Quasar64.z64",
-            "dependsOn": ["clean"],
+            "command": "make clean",
+            "dependsOn": [],
+            "group": {
+                    "kind": "build",
+                    "isDefault": false
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "make",
+            "dependsOn": ["splash", "clean"],
+            "group": {
+                    "kind": "build",
+                    "isDefault": false
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
+            "label": "run-64",
+            "type": "shell",
+            "command": "../src/splash.sh && ares --system N64 Quasar64.z64",
+            "dependsOn": ["build"],
             "group": {
                     "kind": "build",
                     "isDefault": true
