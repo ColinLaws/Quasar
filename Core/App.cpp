@@ -30,7 +30,7 @@ namespace Quasar
             rdpq_init();
             gl_init();
 
-            controller_init();
+            joypad_init();
 
             // #if DEBUG_RDP
             //     rdpq_debug_start();

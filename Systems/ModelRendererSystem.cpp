@@ -1,5 +1,5 @@
 #include "ModelRendererSystem.hpp"
-#include "GL\GL.h"
+#include <GL/gl.h>
 
 namespace Quasar
 {

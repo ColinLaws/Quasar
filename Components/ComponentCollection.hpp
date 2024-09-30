@@ -15,7 +15,7 @@ namespace Quasar
                 static_assert(std::is_base_of<IComponent, T>::value, "T must be a subclass of IComponent");
 
                 public:
-                    ComponentCollection<T>();
+                    ComponentCollection();
                     ~ComponentCollection();
 
                     T* GetComponent(uint16_t entityId);

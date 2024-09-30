@@ -1,7 +1,13 @@
 BUILD_DIR=build
 include $(N64_INST)/include/n64.mk
 
-N64_CXXFLAGS += -std=c++17
+# Can be N64 or Dreamcast
+# PLATFORM ?= N64
+
+# ifeq ($(PLATFORM), N64)
+    
+
+# endif
 
 src = Core/App.cpp \
 	  Core/Entity.cpp \
