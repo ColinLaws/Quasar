@@ -17,7 +17,7 @@ namespace Quasar
         {
             this->entityManager = entityManager;
 
-            model64_t *model = model64_load("rom:/n64-logo.model64");
+            model64_t *model = model64_load("rom:/cube.model64");
 
             ModelComponent *modelComponent = new ModelComponent(model);
 
