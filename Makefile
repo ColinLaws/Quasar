@@ -38,11 +38,11 @@ MKSPRITE_FLAGS ?=
 MKFONT_FLAGS ?=
 MKMODEL_FLAGS ?=
 
-TITLE = Quasar64
+TITLE = Quasar
 
 TARGET = $(TITLE).z64
 
-N64_ROM_TITLE = "Quasar 64"
+N64_ROM_TITLE = "Quasar"
 
 all: $(TARGET)
 
